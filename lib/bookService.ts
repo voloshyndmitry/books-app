@@ -97,7 +97,9 @@ function parseBooks(html: string, page: number): BookData[] {
     // Extract book URL from first link
     const linkEl = $el.find('a[href*="/products/"]').first();
     const url = linkEl.attr('href') || '';
-    const id = url ? url.split('/').filter(Boolean).pop() || `book-p${page}-${index}` : `book-p${page}-${index}`;
+    // Generate unique ID using page and index to avoid duplicates
+    const urlSlug = url ? url.split('/').filter(Boolean).pop() || '' : '';
+    const id = `p${page}-i${index}-${urlSlug || 'nourl'}`;
 
     // Extract title from link title attribute or span inside link
     const title = linkEl.attr('title')
